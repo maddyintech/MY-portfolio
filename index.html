@@ -1,0 +1,1631 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head> 
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Madhav Kumar | AI/ML & Data Science Portfolio</title>
+  <meta name="description" content="Portfolio of Madhav Kumar - AI/ML Engineer, Data Analyst, and Python Developer." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome for Social & Action Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Include Three.js for 3D AI Neural Graphics -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <style>
+    :root[data-theme="dark"] {
+      --bg-primary: #030712;
+      --bg-secondary: #0b0f19;
+      --bg-card: rgba(15, 23, 42, 0.75);
+      --border-color: rgba(56, 189, 248, 0.18);
+      --border-hover: rgba(56, 189, 248, 0.6);
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --accent: #38bdf8;
+      --accent-secondary: #818cf8;
+      --accent-hover: #0ea5e9;
+      --accent-glow: rgba(56, 189, 248, 0.3);
+      --badge-bg: rgba(56, 189, 248, 0.1);
+      --badge-text: #38bdf8;
+      --canvas-bg: radial-gradient(circle at 50% 30%, #061124 0%, #020617 85%);
+      --footer-bg: rgba(11, 15, 25, 0.8);
+      --watermark-color: rgba(56, 189, 248, 0.03);
+    }
+    
+    :root[data-theme="light"] {
+      --bg-primary: #f8fafc;
+      --bg-secondary: #f1f5f9;
+      --bg-card: rgba(255, 255, 255, 0.85);
+      --border-color: rgba(2, 132, 199, 0.2);
+      --border-hover: rgba(2, 132, 199, 0.6);
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --accent: #0284c7;
+      --accent-secondary: #4338ca;
+      --accent-hover: #0369a1;
+      --accent-glow: rgba(2, 132, 199, 0.2);
+      --badge-bg: rgba(2, 132, 199, 0.1);
+      --badge-text: #0369a1;
+      --canvas-bg: radial-gradient(circle at 50% 30%, #e0f2fe 0%, #f8fafc 85%);
+      --footer-bg: rgba(241, 245, 249, 0.9);
+      --watermark-color: rgba(2, 132, 199, 0.04);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+  
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-main);
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+      transition: background-color 0.4s ease, color 0.4s ease;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* Fullscreen Fixed AI Neural 3D Background */
+    #bg-canvas-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      pointer-events: none;
+      background: var(--canvas-bg);
+      transition: background 0.4s ease;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Navbar with Glassmorphism */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      background: var(--bg-card);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-color);
+      transition: var(--transition);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 75px;
+    }
+
+    .nav-left-cluster {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .logo {
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .logo span {
+      color: var(--accent);
+      -webkit-text-fill-color: var(--accent);
+    }
+
+    /* Theme Toggle Button Top Left */
+    .theme-toggle-btn {
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--badge-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      color: var(--accent);
+      cursor: pointer;
+      font-size: 1rem;
+      transition: var(--transition);
+    }
+
+    .theme-toggle-btn:hover {
+      border-color: var(--accent);
+      transform: scale(1.08) rotate(15deg);
+      box-shadow: 0 0 12px var(--accent-glow);
+    }
+
+    .nav-right-cluster {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      transition: var(--transition);
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+      text-shadow: 0 0 10px var(--accent-glow);
+    }
+
+    /* Clickable 3D Dynamic Letter Sign Container for MADHAV */
+    .nav-3d-link {
+      display: inline-block;
+    }
+
+    .nav-3d-container {
+      width: 75px;
+      height: 44px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--badge-bg);
+      border: 1px solid var(--accent);
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(56, 189, 248, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(8px);
+      overflow: hidden;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .nav-3d-link:hover .nav-3d-container {
+      transform: translateY(-2px) scale(1.05);
+      border-color: var(--accent-secondary);
+      box-shadow: 0 8px 25px var(--accent-glow);
+    }
+
+    #navbar-3d-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .nav-3d-label {
+      font-family: var(--font-heading);
+      font-size: 0.7rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+      color: var(--accent);
+      z-index: 2;
+      text-shadow: 0 0 8px var(--accent-glow);
+      pointer-events: none;
+      transition: var(--transition);
+    }
+
+    .nav-3d-link:hover .nav-3d-label {
+      color: var(--text-primary);
+      text-shadow: 0 0 12px var(--accent);
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 140px 0 80px;
+    }
+
+    /* Center Watermark MADDY Style */
+    .hero-watermark {
+      position: absolute;
+      top: 15%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--font-heading);
+      font-size: clamp(4rem, 15vw, 12rem);
+      font-weight: 900;
+      letter-spacing: 0.2em;
+      color: var(--watermark-color);
+      z-index: 0;
+      pointer-events: none;
+      user-select: none;
+      white-space: nowrap;
+      text-align: center;
+      transition: color 0.4s ease;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 16px;
+      border-radius: 9999px;
+      background: var(--badge-bg);
+      color: var(--badge-text);
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.1);
+      backdrop-filter: blur(8px);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--accent);
+      box-shadow: 0 0 10px var(--accent);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      50% { transform: scale(1.2); opacity: 1; box-shadow: 0 0 15px var(--accent); }
+      100% { transform: scale(0.95); opacity: 0.8; }
+    }
+
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-size: 3.75rem;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      letter-spacing: -1px;
+    }
+
+    .hero h1 .highlight {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-secondary) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 25px var(--accent-glow));
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      max-width: 650px;
+      margin-bottom: 36px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    /* 3D Floating Action Buttons */
+    .btn-3d-primary {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
+      border-radius: 14px;
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 700;
+      color: #030712;
+      background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 8px 25px var(--accent-glow), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+      cursor: pointer;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .btn-3d-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transition: 0.5s;
+    }
+
+    .btn-3d-primary:hover::before {
+      left: 100%;
+    }
+
+    .btn-3d-primary:hover {
+      transform: translateY(-6px) scale(1.03);
+      box-shadow: 0 15px 35px var(--accent-hover);
+    }
+
+    .btn-3d-secondary {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
+      border-radius: 14px;
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      background: var(--badge-bg);
+      border: 1px solid var(--border-color);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      cursor: pointer;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .btn-3d-secondary:hover {
+      transform: translateY(-6px) scale(1.03);
+      border-color: var(--accent);
+      background: var(--badge-bg);
+      box-shadow: 0 15px 30px var(--accent-glow);
+      color: var(--accent);
+    }
+
+    /* Sections Common Layout */
+    section {
+      padding: 100px 0;
+      position: relative;
+    }
+
+    .section-title-wrapper {
+      margin-bottom: 48px;
+    }
+
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      display: inline-block;
+      background: linear-gradient(135deg, var(--text-primary) 40%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      position: relative;
+      margin-bottom: 8px;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 45px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
+      border-radius: 9999px;
+      transition: width 0.3s ease;
+    }
+
+    section:hover .section-title::after {
+      width: 100%;
+    }
+
+    .section-subtitle {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+    }
+
+    /* Universal Floating 3D Card Hover Style */
+    .hover-float-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      transition: var(--transition);
+    }
+
+    .hover-float-card:hover {
+      transform: translateY(-8px) scale(1.01);
+      border-color: var(--border-hover);
+      box-shadow: 0 20px 45px var(--accent-glow);
+    }
+
+    /* About Section */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 32px;
+    }
+
+    .about-card {
+      padding: 36px;
+    }
+
+    .about-card h3 {
+      font-family: var(--font-heading);
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--accent);
+    }
+
+    .about-card p {
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+
+    .meta-list {
+      list-style: none;
+    }
+
+    .meta-list li {
+      margin-bottom: 12px;
+      display: flex;
+      gap: 12px;
+      font-size: 0.95rem;
+    }
+
+    .meta-list strong {
+      color: var(--text-primary);
+      min-width: 120px;
+    }
+
+    /* Resume Section Styles */
+    .resume-card {
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+      gap: 24px;
+    }
+
+    .resume-card h3 {
+      font-family: var(--font-heading);
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .resume-card p {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      max-width: 600px;
+    }
+
+    .resume-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    /* Experience Section */
+    .experience-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      max-width: 850px;
+    }
+
+    .experience-card {
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .experience-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .experience-title {
+      font-family: var(--font-heading);
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .experience-period {
+      background: var(--badge-bg);
+      color: var(--badge-text);
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      border: 1px solid var(--border-color);
+    }
+
+    .experience-company {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .experience-desc {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      padding-left: 18px;
+    }
+
+    .experience-desc li {
+      margin-bottom: 8px;
+    }
+
+    /* Education Section */
+    .education-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      max-width: 850px;
+    }
+
+    .education-card {
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .education-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .education-title {
+      font-family: var(--font-heading);
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .education-period {
+      background: var(--badge-bg);
+      color: var(--badge-text);
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      border: 1px solid var(--border-color);
+    }
+
+    .education-institution {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .education-desc {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+
+    /* Skills Grid */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+    }
+
+    .skill-card {
+      padding: 28px;
+    }
+
+    .skill-card h3 {
+      font-family: var(--font-heading);
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--text-primary);
+    }
+
+    .tag-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      background: var(--badge-bg);
+      color: var(--badge-text);
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+    }
+
+    /* Projects Section */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+      gap: 28px;
+    }
+
+    .project-card {
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .project-header h3 {
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--text-primary);
+    }
+
+    .project-header p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      margin-bottom: 24px;
+    }
+
+    .project-links {
+      display: flex;
+      gap: 16px;
+      margin-top: 24px;
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    .project-links a {
+      color: var(--accent);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .project-links a:hover {
+      text-decoration: underline;
+      text-shadow: 0 0 10px var(--accent-glow);
+    }
+
+    /* Certificates Section */
+    .certificates-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 28px;
+    }
+
+    .certificate-card {
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .certificate-content {
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      justify-content: space-between;
+    }
+
+    .certificate-content h3 {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+    .certificate-issuer {
+      font-size: 0.85rem;
+      color: var(--accent);
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .certificate-content p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+    }
+
+    .certificate-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-color);
+      font-family: var(--font-heading);
+    }
+
+    .certificate-date {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .certificate-link {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--accent);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Extras Section */
+    .extras-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      gap: 28px;
+    }
+
+    .extra-card {
+      padding: 32px;
+    }
+
+    .extra-card h3 {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--accent);
+    }
+
+    .extra-card p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+
+    /* Services Section */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      gap: 28px;
+    }
+
+    .service-card {
+      padding: 32px;
+    }
+
+    .service-card h3 {
+      font-family: var(--font-heading);
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--accent);
+    }
+
+    .service-card p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+    }
+
+    .service-card ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    .service-card ul li {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+      position: relative;
+      padding-left: 20px;
+    }
+
+    .service-card ul li::before {
+      content: "✦";
+      color: var(--accent);
+      position: absolute;
+      left: 0;
+      font-size: 0.9rem;
+    }
+
+    /* Contact Section */
+    .contact-card {
+      padding: 56px 32px;
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .contact-card h3 {
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+
+    .contact-card p {
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+      font-size: 1.05rem;
+    }
+
+    .contact-email {
+      display: inline-block;
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 32px;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn-3d-icon {
+      position: relative;
+      width: 52px;
+      height: 52px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 14px;
+      font-size: 1.35rem;
+      color: var(--text-primary);
+      background: var(--badge-bg);
+      border: 1px solid var(--accent);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .btn-3d-icon:hover {
+      transform: translateY(-4px) scale(1.05);
+      border-color: var(--accent-secondary);
+      color: var(--accent);
+    }
+
+    /* Updated Email Button with Glow & Pop-up Effect */
+    .btn-3d-mail {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
+      border-radius: 14px;
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      background: var(--badge-bg);
+      border: 1px solid var(--accent);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      cursor: pointer;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .btn-3d-mail:hover {
+      transform: translateY(-6px) scale(1.03);
+      border-color: var(--accent-secondary);
+      background: var(--badge-bg);
+      box-shadow: 0 15px 30px var(--accent-glow);
+      color: var(--accent);
+    }
+
+    footer {
+      padding: 50px 0;
+      text-align: center;
+      border-top: 1px solid var(--border-color);
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      background: var(--footer-bg);
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.75rem; }
+      .about-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+  
+
+  <!-- Fullscreen 3D AI Neural Background Canvas -->
+  <div id="bg-canvas-container"></div>
+
+  <!-- Navigation -->
+  <header>
+    <div class="container">
+      <nav>
+        <div class="nav-left-cluster">
+          <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle Theme">
+            <i class="fa-solid fa-moon" id="themeIcon"></i>
+          </button>
+          <a href="#" class="logo">Madhav<span>atwork</span></a>
+        </div>
+        <div class="nav-right-cluster">
+          <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#resume">Resume</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#certificates">Certificates</a></li>
+            <li><a href="#extras">Extras</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+          <a href="#contact" class="nav-3d-link" title="Contact Me">
+            <div class="nav-3d-container">
+              <div id="navbar-3d-canvas"></div>
+              <span class="nav-3d-label" id="matrixLetter">M</span>
+            </div>
+          </a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-watermark">MADHAV</div>
+    <div class="container">
+      <div class="status-badge" id="greetingBadge">
+        <div class="status-dot"></div>
+        <span id="greetingText">Hello there!</span>
+      </div>
+      
+      <h1>Precision code & Intelligent systems - <span class="highlight">Real-world impact.</span></h1>
+      <p>
+        I'm <strong>Madhav Kumar</strong> — Driven by curiosity, powered by logic—crafting efficient software and models from the ground up.
+      </p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn-3d-primary">
+          <i class="fa-solid fa-rocket"></i> View Projects
+        </a>
+        <a href="#resume" class="btn-3d-secondary">
+          <i class="fa-solid fa-file-arrow-down"></i> View Resume
+        </a>
+        <a href="#contact" class="btn-3d-secondary">
+          <i class="fa-solid fa-envelope"></i> Get in Touch
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about">
+    <div class="container">
+      <div class="section-title-wrapper">
+        <h2 class="section-title">About Me</h2>
+        <p class="section-subtitle">A quick look at my background and what drives my work.</p>
+      </div>
+      <div class="about-grid">
+        <div class="about-card hover-float-card">
+          <h3>Background</h3>
+          <p>
+           I am currently pursuing my B.Tech in Computer Science and Engineering with a specialized focus in Artificial Intelligence and Machine Learning at Teerthanker Mahaveer University. My technical journey is driven by a deep fascination with how raw, unstructured data can be transformed into intelligent, automated systems.          <p>
+            <p>My day-to-day work primarily revolves around writing robust and modular Python code, executing exploratory data analysis (EDA), and building machine learning models that solve real-world problems. Whether it's processing financial news streams through NLP pipelines or engineering clean data architectures, I believe in practical, highly optimized codebases that bridge the gap between experimental algorithms and reliable production applications.</p>
+          
+        </div>
+        
+          
+          
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Resume Section -->
+  <section id="resume">
+    <div class="container">
+      <div class="section-title-wrapper">
+        <h2 class="section-title">Resume</h2>
+        <p class="section-subtitle">Download my Resume to check my professional overview.</p>
+      </div>
+      <div class="resume-card hover-float-card">
+        <h3>Madhav Kumar - AI/ML & Data Science Professional</h3>
+        <p>
+          Detailed summary of my educational background, technical expertise, project works, hands-on internships, and verified credentials compiled neatly into a single document.
+        </p>
+        <div class="resume-actions">
+          <!-- Aap yahan apne resume ka direct link ya PDF file path dal sakte hain -->
+          <a href="your-resume-link.pdf" target="_blank" rel="noopener" class="btn-3d-primary">
+            <i class="fa-solid fa-download"></i> Download Resume (PDF)
+          </a>
+          <a href="#contact" class="btn-3d-secondary">
+            <i class="fa-solid fa-paper-plane"></i> Request via Email
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience Section -->
+  <section id="experience">
+    <div class="container">
+      <div class="section-title-wrapper">
+        <h2 class="section-title">Experience</h2>
+        <p class="section-subtitle">My professional journey and internships.</p>
+      </div>
+      <div class="experience-grid">
+        <div class="experience-card hover-float-card">
+          <div class="experience-header">
+            <div>
+              <div class="experience-title">Python Programming Intern</div>
+              <div class="experience-company">Internpe</div>
+            </div>
+            <span class="experience-period">July 2026-August 2026</span>
+          </div>
+          <ul class="experience-desc">
+            <li>Developed modular Python automation and data preprocessing scripts to handle unstructured datasets.</li>
+            <li>Assisted in building exploratory data analysis (EDA) pipelines and visual reports using Pandas, Matplotlib, and Seaborn.</li>
+            <li>Collaborated on integrating lightweight machine learning models for predictive analysis tasks.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Education Section -->
+  <section id="education">
+    <div class="container">
+      <div class="section-title-wrapper">
+        <h2 class="section-title">Education</h2>
+        <p class="section-subtitle">My academic foundations and core training.</p>
+      </div>
+      <div class="education-grid">
+        <div class="education-card hover-float-card">
+          <div class="education-header">
+            <div>
+              <div class="education-title">B.Tech in Computer Science & Engineering</div>
+              <div class="education-institution">Teerthanker Mahaveer University (TMU)</div>
+            </div>
+            <span class="education-period">Pursuing</span>
+          </div>
+          <p class="education-desc">
+            Specialization in Artificial Intelligence & Machine Learning. Concentrating on core computer science concepts, object-oriented programming, data structures, algorithms, and practical neural network implementations.
+          </p>
+        </div>
+        </div>
+      <div class="education-grid">
+        <div class="education-card hover-float-card">
+          <div class="education-header">
+            <div>
+              <div class="education-title">Senior Secondary Schooling</div>
+              <div class="education-institution">Central Board of Secondary Education(CBSE)</div>
+            </div>
+            <span class="education-period">2023 - 2024</span>
+          </div>
+          <p class="education-desc">
+            SUBJECTS - Physics , Chemistry , MAthematics & Information Technology.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section id="skills">
+    <div class="container">
+      <div class="section-title-wrapper">
+        <h2 class="section-title">Technical Skills</h2>
+        <p class="section-subtitle">The modern stack and tools I use to build solutions.</p>
+      </div>
+      <div class="skills-grid">
+        <div class="skill-card hover-float-card">
+          <h3>Languages</h3>
+          <div class="tag-container">
+            <span class="tag">Python</span>
+            <span class="tag">SQL</span>
+            <span class="tag">C++</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">HTML / CSS </span>
+          </div>
+        </div>
+        <div class="skill-card hover-float-card">
+          <h3>Libraries & ML</h3>
+          <div class="tag-container">
+            <span class="tag">Pandas</span>
+            <span class="tag">NumPy</span>
+            <span class="tag">Matplotlib</span>
+            <span class="tag">Seaborn</span>
+            <span class="tag">Scikit-Learn</span>
+            <span class="tag">TF-IDF / NLP</span>
+
+          </div>
+        </div>
+        <div class="skill-card hover-float-card">
+          <h3>Data Engineering</h3>
+          <div class="tag-container">
+            <span class="tag">Data Cleaning</span>
+            <span class="tag">EDA</span>
+            <span class="tag">CSV & Excel</span>
+            <span class="tag">Dataset Deduplication</span>
+            <span class="tag">Data Preprocessing</span>
+            <span class="tag">ETL Workflows</span>
+            <span class="tag">SQL Database Querying</span>
+
+
+          </div>
+        </div>
+        <div class="skill-card hover-float-card">
+          <h3>Tools & Workflow</h3>
+          <div class="tag-container">
+            <span class="tag">Git & GitHub</span>
+            <span class="tag">Jupyter Notebook / Google Colab</span>
+            <span class="tag">VS Code</span>
+            <span class="tag">N8N</span>
+            <span class="tag">Markdown</span>
+
+
+          </div>
+
+         </div>
+        <div class="skill-card hover-float-card">
+          <h3>Professional Soft Skills</h3>
+          <div class="tag-container">
+            <span class="tag">Analytical Thinking and Problem Solving</span>
+            <span class="tag">Cross-Functional Collaboration</span>
+            <span class="tag">Continuos Learning and Adaptibilty</span>
+            <span class="tag">Technical Documentation</span>
+            <span class="tag">Time Management and Execution</span>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects">
+    <div class="container">
+      <div class="section-title-wrapper">
+        <h2 class="section-title">Projects</h2>
+        <p class="section-subtitle">Key technical solutions and applications I've engineered.</p>
+      </div>
+      <div class="projects-grid">
+        <div class="project-card hover-float-card">
+          <div class="project-header">
+            <h3>Virtual Dresssing Room</h3>
+            <p>A 3D Virtual Dressing Room is an AI-powered fashion visualization project that allows users to virtually preview clothing on a digital representation of themselves. The system combines computer vision, image processing, 3D visualization, and AI-based techniques to create an interactive virtual try-on experience.
+
+            The project focuses on helping users visualize different outfits, colors, and clothing styles before making a selection, creating a more personalized and engaging digital shopping experience.
+</p>
+            <div class="tag-container">
+              <span class="tag">Natural Language Processing</span>
+              <span class="tag">Machine Learning</span>
+              <span class="tag">Scikit Learn</span>
+
+              <span class="tag">Matplotlib</span>
+              <span class="tag">Sentiment Analysis</span>
+            </div>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/maddyintech" target="_blank" rel="noopener">GitHub Repository ↗</a>
+          </div>
+        </div>
+
+        <div class="project-card hover-float-card">
+          <div class="project-header">
+            <h3>SNS Analytics Dashboard</h3>
+            <p>SNS Dashboard is an AI/ML-powered financial news analytics platform designed to analyze stock-market-related news and identify its sentiment. The system uses Natural Language Processing, text preprocessing, feature extraction, and machine learning techniques to classify financial news into positive, neutral, and negative sentiment categories.
+
+            The project transforms unstructured financial news into meaningful visual insights through an interactive dashboard, helping users understand sentiment patterns, analyze news trends, and explore market-related information in a more structured and accessible way.
+</p>
+
+            <div class="tag-container">
+              <span class="tag">Natural Language Processing</span>
+              <span class="tag">Machine Learning</span>
+              <span class="tag">Python Programming Language</span>
+              <span class="tag">Data Analysis and Visualization</span>
+              <span class="tag">Scikit-Learn</span>
+
+
+            </div>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/maddyintech" target="_blank" rel="noopener">GitHub Repository ↗</a>
+          </div>
+        </div>
+
+        
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Certificates Section -->
+  <section id="certificates">
+    <div class="container">
+      <div class="section-title-wrapper">
+        <h2 class="section-title">Certificates & Credentials</h2>
+        <p class="section-subtitle">Verified professional milestones and completed specializations.</p>
+      </div>
+      <div class="certificates-grid">
+        <div class="certificate-card hover-float-card">
+          <div class="certificate-content">
+            <div>
+              <h3>Machine Learning Specialization</h3>
+              <div class="certificate-issuer">Stanford Online & DeepLearning.AI</div>
+              <p>Comprehensive training covering supervised learning algorithms, neural network architecture design, and unsupervised learning workflows.</p>
+            </div>
+            <div class="certificate-footer">
+              <span class="certificate-date">Issued: 2025</span>
+              <a href="#" target="_blank" rel="noopener" class="certificate-link">Verify Credential ↗</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="certificate-card hover-float-card">
+          <div class="certificate-content">
+            <div>
+              <h3>Python for Data Science & ML</h3>
+              <div class="certificate-issuer">Coursera / Udemy</div>
+              <p>Hands-on proficiency utilizing data manipulation libraries, data visualization tools, and statistical modeling metrics.</p>
+            </div>
+            <div class="certificate-footer">
+              <span class="certificate-date">Issued: 2024</span>
+              <a href="#" target="_blank" rel="noopener" class="certificate-link">Verify Credential ↗</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="certificate-card hover-float-card">
+          <div class="certificate-content">
+            <div>
+              <h3>Introduction to Data Analytics</h3>
+              <div class="certificate-issuer">NPTEL / Professional Body</div>
+              <p>Mastered data auditing, exploratory procedures, SQL queries, and robust database management systems.</p>
+            </div>
+            <div class="certificate-footer">
+              <span class="certificate-date">Issued: 2024</span>
+              <a href="#" target="_blank" rel="noopener" class="certificate-link">Verify Credential ↗</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Extras Section -->
+  <section id="extras">
+    <div class="container">
+      <div class="section-title-wrapper">
+        <h2 class="section-title">Extras & Activities</h2>
+        <p class="section-subtitle">Extracurricular involvements, hackathons, and achievements.</p>
+      </div>
+      <div class="extras-grid">
+        <div class="extra-card hover-float-card">
+          <h3>Hackathons & Coding Contests</h3>
+          <p>Active participant in college-level and online coding challenges, solving algorithmic problems and building rapid ML prototypes under tight deadlines.</p>
+        </div>
+        <div class="extra-card hover-float-card">
+          <h3>Tech Community Contributor</h3>
+          <p>Engaged in peer-to-peer code reviews, collaborating on open-source repositories, and sharing technical learnings with fellow developers.</p>
+        </div>
+        <div class="extra-card hover-float-card">
+          <h3>Continuous Learning</h3>
+          <p>Consistently exploring advanced AI research papers, participating in technical workshops, and staying updated with modern data science tooling.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section id="services">
+    <div class="container">
+      <div class="section-title-wrapper">
+        <h2 class="section-title">What I Can Help With</h2>
+        <p class="section-subtitle">Core capabilities offered for professional collaborations and tasks.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card hover-float-card">
+          <h3>1.  A.I. & Machine Learning Developement</h3>
+          <p>Engineering custom machine learning models and intelligent automation systems to solve complex real-world data problems.</p>
+          <ul>
+            <li>Custom Predictive Modeling (Classification, Regression, and Time-Series forecasting using Scikit-Learn & TensorFlow).</li>
+            <li>NLP & Text Processing pipelines for sentiment analysis and data classification.</li>
+            <li>Integration of intelligent AI features into web applications and third-party APIs.</li>
+          </ul>
+        </div>
+        <div class="service-card hover-float-card">
+          <h3>2. Data Science & Advanced Analytics</h3>
+          <p>Transforming raw, unorganized datasets into clean, actionable insights and visual dashboards.</p>
+          <ul>
+            <li>Data Cleaning, Preprocessing, and Exploratory Data Analysis (EDA) using Pandas and NumPy.</li>
+            <li>Interactive business intelligence dashboards and statistical data visualization.</li>
+            <li>Automated reporting systems to track key metrics and performance indicators.</li>
+          </ul>
+        </div>
+        <div class="service-card hover-float-card">
+          <h3>3. Full-Stack Web Developement</h3>
+          <p>Building high-performance, scalable, and responsive web applications from the ground up.</p>
+          <ul>
+            <li>Modern frontend development with HTML5, CSS3, JavaScript (ES6+), and modern component architecture.</li>
+            <li>Responsive, mobile-first design implementation with sleek UI/UX principles (Glassmorphism, dark/light themes).</li>
+            <li>End-to-end web performance optimization for lightning-fast load times and SEO.</li>
+          </ul>
+        </div>
+        <div class="service-card hover-float-card">
+          <h3>4. Interactive 3D Web Experiences</h3>
+          <p>Elevating standard websites into immersive digital experiences using Three.js and WebGL.</p>
+          <ul>
+            <li>Custom 3D interactive backgrounds (Neural networks, particle systems, rotating geometries).</li>
+            <li>Interactive UI components with dynamic mouse/scroll tracking effects.</li>
+            <li>Performance-tuned WebGL animations that run smoothly across all modern devices.</li>
+          </ul>
+        </div>
+                <div class="service-card hover-float-card">
+          <h3>5. Python Automation & Scripting</h3>
+          <p>Writing robust scripts to automate repetitive manual tasks, data extraction, and backend logic.</p>
+          <ul>
+            <li>Web Scraping & Data Extraction pipelines (BeautifulSoup, Selenium) for automated data gathering.</li>
+            <li>Custom CLI tools and automation scripts to save manual hours and streamline operations.</li>
+            <li>Secure backend logic, database handling, and lightweight API development.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-card hover-float-card" id="contactCardContent">
+      <h3>Interested in working together? Drop a line below and let's discuss how I can add value.</h3>
+      <p>
+        Whether you want to discuss a project, talk about an internship, or just say hello, my inbox is always open.
+      </p>
+      <a href="mailto:madhavkatyanatwork@gmail.com" class="contact-email">madhavkatyanatwork@gmail.com</a>
+      <div class="social-links">
+        <a href="https://github.com/maddyintech" target="_blank" rel="noopener" class="btn-3d-icon" aria-label="GitHub Profile">
+          <i class="fa-brands fa-github"></i>
+        </a>
+        <a href="https://www.linkedin.com/in/madhav-kumar-ah4086184" target="_blank" rel="noopener" class="btn-3d-icon" aria-label="LinkedIn Profile">
+          <i class="fa-brands fa-linkedin-in"></i>
+       <a href="mailto:madhavkatyanatwork@gmail.com" class="btn-3d-mail" id="sendEmailBtn">
+  <i class="fa-solid fa-paper-plane"></i> Send Email
+</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Madhav Kumar. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Theme Toggle Logic
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    const themeIcon = document.getElementById('themeIcon');
+    const htmlElement = document.documentElement;
+
+    const savedTheme = localStorage.getItem('portfolio-theme') || 'dark';
+    htmlElement.setAttribute('data-theme', savedTheme);
+    updateThemeIcon(savedTheme);
+
+    themeToggleBtn.addEventListener('click', () => {
+      const currentTheme = htmlElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      
+      htmlElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('portfolio-theme', newTheme);
+      updateThemeIcon(newTheme);
+    });
+
+    function updateThemeIcon(theme) {
+      if (theme === 'light') {
+        themeIcon.classList.remove('fa-moon');
+        themeIcon.classList.add('fa-sun');
+      } else {
+        themeIcon.classList.remove('fa-sun');
+        themeIcon.classList.add('fa-moon');
+      }
+    }
+
+    // Time-Zone Greeting Logic
+    function updateGreeting() {
+      const hour = new Date().getHours();
+      const greetingText = document.getElementById('greetingText');
+      
+      if (hour >= 5 && hour < 12) {
+        greetingText.textContent = "☀️ Initializing Morning Systems! Welcome to my portfolio";
+      } else if (hour >= 12 && hour < 17) {
+        greetingText.textContent = "⚡ High-performance afternoon! Welcome to my workspace";
+      } else {
+        greetingText.textContent = "🌙 Night-mode active & debugging! Welcome to my portfolio";
+      }
+    }
+    updateGreeting();
+
+    // Navbar 3D Mini Rotating Wireframe & MADHAV Letter Cycling Script
+    const navContainer = document.getElementById('navbar-3d-canvas');
+    const matrixLetter = document.getElementById('matrixLetter');
+    const madhavName = "MADHAV";
+    let letterIndex = 0;
+
+    setInterval(() => {
+      letterIndex = (letterIndex + 1) % madhavName.length;
+      matrixLetter.textContent = madhavName[letterIndex];
+    }, 1500);
+
+    const navScene = new THREE.Scene();
+    const navCamera = new THREE.PerspectiveCamera(50, 75 / 44, 0.1, 1000);
+    navCamera.position.z = 2.5;
+
+    const navRenderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    navRenderer.setSize(75, 44);
+    navRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    navContainer.appendChild(navRenderer.domElement);
+
+    
+    // Radius, height, aur segments (6 segments ka matlab ek perfect Hexagon pillar!)
+const navGeo = new THREE.CylinderGeometry(0.6, 0.6, 0.9, 6);
+    const navMat = new THREE.MeshBasicMaterial({
+      color: 0x38bdf8,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.45
+    });
+    const navMesh = new THREE.Mesh(navGeo, navMat);
+    navScene.add(navMesh);
+
+    function animateNav3D() {
+      requestAnimationFrame(animateNav3D);
+      navMesh.rotation.x += 0.01;
+      navMesh.rotation.y += 0.015;
+      navRenderer.render(navScene, navCamera);
+    }
+    animateNav3D();
+
+    // Three.js Interactive AI Neural Network Background
+    const container = document.getElementById('bg-canvas-container');
+    
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.z = 3.5;
+
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    container.appendChild(renderer.domElement);
+
+    const particleCount = 400;
+    const particleGeometry = new THREE.BufferGeometry();
+    const positions = new Float32Array(particleCount * 3);
+
+    for(let i = 0; i < particleCount * 3; i++) {
+      positions[i] = (Math.random() - 0.5) * 10;
+    }
+
+    particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+    const particleMaterial = new THREE.PointsMaterial({
+      size: 0.025,
+      color: 0x38bdf8,
+      transparent: true,
+      opacity: 0.85,
+      blending: THREE.AdditiveBlending
+    });
+
+    const particles = new THREE.Points(particleGeometry, particleMaterial);
+    scene.add(particles);
+
+    const lineMaterial = new THREE.LineBasicMaterial({
+      color: 0x818cf8,
+      transparent: true,
+      opacity: 0.15
+    });
+
+    const lineGeometry = new THREE.BufferGeometry();
+    const linePositions = [];
+
+    for (let i = 0; i < particleCount; i++) {
+      for (let j = i + 1; j < particleCount; j++) {
+        const dx = positions[i * 3] - positions[j * 3];
+        const dy = positions[i * 3 + 1] - positions[j * 3 + 1];
+        const dz = positions[i * 3 + 2] - positions[j * 3 + 2];
+        const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+        if (dist < 1.4) {
+          linePositions.push(
+            positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2],
+            positions[j * 3], positions[j * 3 + 1], positions[j * 3 + 2]
+          );
+        }
+      }
+    }
+
+    lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
+    const neuralMesh = new THREE.LineSegments(lineGeometry, lineMaterial);
+    scene.add(neuralMesh);
+
+    let mouseX = 0;
+    let mouseY = 0;
+    let targetX = 0;
+    let targetY = 0;
+
+    document.addEventListener('mousemove', (event) => {
+      mouseX = (event.clientX / window.innerWidth) - 0.5;
+      mouseY = (event.clientY / window.innerHeight) - 0.5;
+    });
+
+    const clock = new THREE.Clock();
+
+    function animate() {
+      requestAnimationFrame(animate);
+      const elapsedTime = clock.getElapsedTime();
+
+      targetX += (mouseX - targetX) * 0.05;
+      targetY += (mouseY - targetY) * 0.05;
+
+      particles.rotation.y = elapsedTime * 0.04 + (targetX * 0.8);
+      particles.rotation.x = elapsedTime * 0.02 + (targetY * 0.8);
+
+      neuralMesh.rotation.y = elapsedTime * 0.04 + (targetX * 0.8);
+      neuralMesh.rotation.x = elapsedTime * 0.02 + (targetY * 0.8);
+
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script>
+</body>
+</html>
